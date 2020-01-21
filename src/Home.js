@@ -9,6 +9,15 @@ const Home = function({ match, history }) {
     const [beers, setBeers] = useState([]);
     const [pageNumber, setPageNumber] = useState(1);
 
+    useEffect(
+        function() {
+            let { page } = match.params;
+            page = +page ? page : 1;
+            fetchBeer(page);
+        },
+        [match.params.page] // eslint-disable-line
+    );
+
     function fetchBeer(page) {
         fetch(`https://api.punkapi.com/v2/beers?page=${page}&per_page=50`)
             .then(res => res.json())
@@ -17,7 +26,6 @@ const Home = function({ match, history }) {
                 setError(false);
                 setBeers(parsedRes);
                 setPageNumber(page);
-                history.push(`/${page}`);
             })
             .catch(() => {
                 // setBeers([]);
@@ -25,16 +33,13 @@ const Home = function({ match, history }) {
             });
     }
 
-    useEffect(
-        function() {
-            let { page } = match.params;
-            page = +page ? page : 1;
-            fetchBeer(page);
-        },
-        [match.params.page]
-    );
-
-    if (loading) {
+    if (error) {
+        return (
+            <div>
+                <p>Error!</p>
+            </div>
+        );
+    } else if (loading) {
         return (
             <div>
                 <h1>loading...</h1>
