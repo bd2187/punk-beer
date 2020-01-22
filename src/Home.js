@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import BeerThumbnail from "./BeerThumbnail";
 import Pagination from "./Pagination";
 
-const Home = function({ match, history }) {
+const Home = function({ match }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [beers, setBeers] = useState([]);
@@ -28,8 +27,9 @@ const Home = function({ match, history }) {
                 setPageNumber(page);
             })
             .catch(() => {
-                // setBeers([]);
-                // setLoading(false);
+                setBeers([]);
+                setLoading(false);
+                setError(true);
             });
     }
 
