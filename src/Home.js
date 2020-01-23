@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BeerThumbnail from "./BeerThumbnail";
 import Pagination from "./Pagination";
+import SearchBar from "./SearchBar";
 
 const Home = function({ match }) {
     const [loading, setLoading] = useState(true);
@@ -49,6 +50,7 @@ const Home = function({ match }) {
         // console.log(beers);
         return (
             <div>
+                <SearchBar />
                 <ul>
                     {beers.map(beer => (
                         <BeerThumbnail beer={beer} key={beer.id} />
