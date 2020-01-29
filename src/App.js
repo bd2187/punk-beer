@@ -4,13 +4,10 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./Home";
 import Navigation from "./Navigation";
 import Beer from "./Beer";
+import SearchResults from "./SearchResults";
 
 const Favorites = function() {
     return <h1>favorites</h1>;
-};
-
-const Search = function() {
-    return <h1>Search</h1>;
 };
 
 const App = function() {
@@ -21,7 +18,11 @@ const App = function() {
                     <Navigation />
                     <Switch>
                         <Route exact path="/:page?" component={Home} />
-                        <Route exact path="/search/:query" component={Search} />
+                        <Route
+                            exact
+                            path="/search/:query"
+                            component={SearchResults}
+                        />
                         <Route exact path="/favorites" component={Favorites} />
                         <Route exacth path="/beer/:id" component={Beer} />
                     </Switch>
