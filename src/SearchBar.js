@@ -3,24 +3,20 @@ import { Redirect } from "react-router-dom";
 
 const SearchBar = function() {
     const [value, setValue] = useState("");
+    const [hasError, setError] = useState(false);
     const [redirect, setRedirect] = useState(false);
 
     function searchBeer(evt) {
         evt.preventDefault();
 
-        let isValid = true;
-        // place validation logic here
+        const query = value.trim();
+        let isValid = query.length >= 4 ? true : false;
 
-        // if form is valid, redirect to /search/value
-        if (isValid) {
-            setRedirect(true);
-        } else {
-            // display error
-        }
+        isValid ? setRedirect(true) : setError(true);
     }
 
     return redirect ? (
-        <Redirect to={`/search/${value}`} />
+        <Redirect to={`/search/${encodeURIComponent(value)}`} />
     ) : (
         <form onSubmit={searchBeer}>
             <input
@@ -29,6 +25,9 @@ const SearchBar = function() {
                 onChange={evt => setValue(evt.target.value)}
             />
             <input type="submit" value="Search" />
+            {hasError ? (
+                <p>Search term must be at least 4 characters long.</p>
+            ) : null}
         </form>
     );
 };
