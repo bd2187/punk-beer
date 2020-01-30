@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-const SearchBar = function() {
+const SearchBar = function({ history }) {
     const [value, setValue] = useState("");
     const [hasError, setError] = useState(false);
-    const [redirect, setRedirect] = useState(false);
 
     function searchBeer(evt) {
         evt.preventDefault();
@@ -12,12 +11,12 @@ const SearchBar = function() {
         const query = value.trim();
         let isValid = query.length >= 4 ? true : false;
 
-        isValid ? setRedirect(true) : setError(true);
+        isValid
+            ? history.push(`/search/${encodeURIComponent(value)}`)
+            : setError(true);
     }
 
-    return redirect ? (
-        <Redirect to={`/search/${encodeURIComponent(value)}`} />
-    ) : (
+    return (
         <form onSubmit={searchBeer}>
             <input
                 type="text"
@@ -32,4 +31,4 @@ const SearchBar = function() {
     );
 };
 
-export default SearchBar;
+export default withRouter(SearchBar);
