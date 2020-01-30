@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 const Navigation = function() {
     return (
@@ -13,6 +14,8 @@ const Navigation = function() {
                     <Link to="/favorites">Favorites</Link>
                 </li>
             </ul>
+
+            <SearchBar />
         </div>
     );
 };
