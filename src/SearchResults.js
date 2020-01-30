@@ -34,7 +34,7 @@ const SearchResults = function({ match }) {
                     });
                 });
         },
-        [match.params]
+        [match.params, query]
     );
 
     if (state.error) {
@@ -44,7 +44,11 @@ const SearchResults = function({ match }) {
     } else if (state.searchResults.length > 0) {
         return (
             <>
-                <h1>{state.searchResults.length} results found</h1>
+                <h1>
+                    {state.searchResults.length}{" "}
+                    {state.searchResults.length > 1 ? "results" : "result"}{" "}
+                    found for &quot;{query}&quot;
+                </h1>
 
                 <ul>
                     {state.searchResults.map(beer => (
