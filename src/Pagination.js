@@ -6,7 +6,6 @@ class Pagination extends React.Component {
         super(props);
         this.state = {
             currentPage: 0,
-
             pages: []
         };
     }
@@ -41,36 +40,31 @@ class Pagination extends React.Component {
     }
 
     render() {
+        const { currentPage } = this.state;
+        const { link, maxPages } = this.props;
         return (
             <div>
+                {parseInt(currentPage) - 1 > 0 ? (
+                    <Link to={`${link}${parseInt(currentPage) - 1}`}>Prev</Link>
+                ) : null}
                 <ul>
                     {this.state.pages.map(({ number, selected }) => {
                         var color = selected ? "red" : "black";
                         return (
                             <li key={number}>
-                                <Link
-                                    to={`${this.props.link}${number}`}
-                                    style={{ color }}
-                                >
+                                <Link to={`${link}${number}`} style={{ color }}>
                                     {number}
                                 </Link>
                             </li>
                         );
                     })}
                 </ul>
+                {parseInt(currentPage) + 1 <= parseInt(maxPages) ? (
+                    <Link to={`${link}${parseInt(currentPage) + 1}`}>Next</Link>
+                ) : null}
             </div>
         );
     }
 }
 
 export default Pagination;
-
-//             <div>
-//                 {currentPage - 1 > 0 ? (
-//                     <Link to={`${link}${currentPage - 1}`}>Prev</Link>
-//                 ) : null}
-//                 <ul>{pages}</ul>
-//                 {currentPage + 1 <= maxPages ? (
-//                     <Link to={`${link}${currentPage + 1}`}>Next</Link>
-//                 ) : null}
-//             </div>
