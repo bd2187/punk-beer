@@ -1,29 +1,40 @@
 import React, { useState, useEffect } from "react";
 
 const Beer = function({ match }) {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [beer, setBeer] = useState({});
+    const [state, setState] = useState({
+        loading: true,
+        error: false,
+        beer: {}
+    });
 
-    useEffect(function() {
-        const { id: beerID } = match.params;
-        fetch(`https://api.punkapi.com/v2/beers/${beerID}`)
-            .then(res => res.json())
-            .then(parsedRes => {
-                setLoading(false);
-                setError(false);
-                if (parsedRes[0] && +parsedRes[0].id >= 0) {
-                    setBeer(parsedRes[0]);
-                } else {
-                    throw "beer not found";
-                }
-            })
-            .catch(() => {
-                setLoading(false);
-                setError(true);
-                setBeer({});
-            });
-    }, []);
+    useEffect(
+        function() {
+            const { id: beerID } = match.params;
+            fetch(`https://api.punkapi.com/v2/beers/${beerID}`)
+                .then(res => res.json())
+                .then(parsedRes => {
+                    if (parsedRes[0] && +parsedRes[0].id >= 0) {
+                        setState({
+                            loading: false,
+                            error: false,
+                            beer: parsedRes[0]
+                        });
+                    } else {
+                        throw "beer not found";
+                    }
+                })
+                .catch(() => {
+                    setState({
+                        loading: false,
+                        error: true,
+                        beer: {}
+                    });
+                });
+        },
+        [match.params]
+    );
+
+    const { error, loading, beer } = state;
 
     if (error) {
         <div>
