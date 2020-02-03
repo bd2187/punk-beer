@@ -11,9 +11,12 @@ const SearchBar = function({ history }) {
         const query = value.trim();
         let isValid = query.length >= 4 ? true : false;
 
-        isValid
-            ? history.push(`/search/${encodeURIComponent(value)}`)
-            : setError(true);
+        if (isValid) {
+            setValue("");
+            history.push(`/search/${encodeURIComponent(value)}`);
+        } else {
+            setError(true);
+        }
     }
 
     return (
