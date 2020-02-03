@@ -3,10 +3,12 @@ import BeerThumbnail from "./BeerThumbnail";
 import Pagination from "./Pagination";
 
 const Home = function({ match }) {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
-    const [beers, setBeers] = useState([]);
-    const [pageNumber, setPageNumber] = useState(1);
+    const [state, setState] = useState({
+        loading: true,
+        error: false,
+        beers: [],
+        pageNumber: 1
+    });
 
     useEffect(
         function() {
@@ -21,17 +23,23 @@ const Home = function({ match }) {
         fetch(`https://api.punkapi.com/v2/beers?page=${page}&per_page=50`)
             .then(res => res.json())
             .then(parsedRes => {
-                setLoading(false);
-                setError(false);
-                setBeers(parsedRes);
-                setPageNumber(page);
+                setState({
+                    loading: false,
+                    error: false,
+                    beers: parsedRes,
+                    pageNumber: page
+                });
             })
             .catch(() => {
-                setBeers([]);
-                setLoading(false);
-                setError(true);
+                setState({
+                    beers: [],
+                    loading: false,
+                    error: true
+                });
             });
     }
+
+    const { error, loading, beers, pageNumber } = state;
 
     if (error) {
         return (
