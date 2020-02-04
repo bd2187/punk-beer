@@ -57,7 +57,7 @@ const Home = function({ match }) {
         // console.log(beers);
         return (
             <div>
-                <ul>
+                <ul style={{ display: "flex", width: "90%", flexWrap: "wrap" }}>
                     {beers.map(beer => (
                         <BeerThumbnail beer={beer} key={beer.id} />
                     ))}

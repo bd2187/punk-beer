@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const BeerThumbnail = function({ beer }) {
     return (
-        <li>
+        <li style={{ width: "25%" }}>
             <Link to={`/beer/${beer.id}`}>
                 <img
                     src={
@@ -12,6 +12,7 @@ const BeerThumbnail = function({ beer }) {
                             : "https://images.punkapi.com/v2/keg.png"
                     }
                     alt={`${beer.name} beer`}
+                    style={{ width: "40%" }}
                 />
                 <h1>{beer.name}</h1>
                 <p>{beer.tagline}</p>
